@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name="UnidadeMedida")
+@Table(name="UnidadeMedidas")
 public class UnidadeMedida implements Serializable {
 
     @Id
