@@ -46,6 +46,29 @@ public class UnidadeMedidaController {
         return ResponseEntity.status(HttpStatus.OK).body(unidadeMedida.get());
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> atualizarUnidadeMedida(@PathVariable(value="id") Integer id,
+                                                   @RequestBody UnidadeMedidaDTO dto){
+        Optional<UnidadeMedida> unidadeMedida = repositorioUnidadeMedida.findById(id);
+        if(unidadeMedida.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("UM não encontrada");
+        }
+        BeanUtils.copyProperties(dto, unidadeMedida.get());
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(repositorioUnidadeMedida.save(unidadeMedida.get()));
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> excluirUnidadeMedida(@PathVariable(value="id") Integer id){
+        Optional<UnidadeMedida> unidadeMedida = repositorioUnidadeMedida.findById(id);
+        if(unidadeMedida.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("UM não encontrada");
+        }
+        repositorioUnidadeMedida.delete(unidadeMedida.get());
+        return ResponseEntity.status(HttpStatus.OK)
+                .body("UM removida com sucesso!");
+    }
 
 }

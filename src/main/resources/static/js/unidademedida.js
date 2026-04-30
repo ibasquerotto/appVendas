@@ -1,5 +1,5 @@
 /**
- * main.js - Lógica de negócio para a interface de Produtos.
+ * main.js - Lógica de negócio para a interface de Unidade de Medidas.
  * Consome os endpoints da API Spring Boot.
  */
 
@@ -10,7 +10,7 @@ $(document).ready(function () {
 });
 
 /**
- * Busca a lista de produtos do servidor.
+ * Busca a lista de unidade de medidas do servidor.
  */
 function listarUnidadeMedidas() {
     exibirCarregando();
@@ -53,7 +53,7 @@ function gerarTabelaUnidadeMedidas(lista) {
                     <a class="btn-flat waves-effect" onclick="prepararEdicao(${und.id})">
                         <i class="material-icons blue-text">edit</i>
                     </a>
-                    <a class="btn-flat waves-effect" onclick="excluirProduto(${und.id})">
+                    <a class="btn-flat waves-effect" onclick="excluirUnidadeMedida(${und.id})">
                         <i class="material-icons red-text">delete</i>
                     </a>
                 </td>
@@ -70,7 +70,7 @@ function gerarTabelaUnidadeMedidas(lista) {
 function salvar() {
     const id = $("#id").val();
 
-    // Coleta dados sincronizados com ProdutoDTO.java
+    // Coleta dados sincronizados com UnidadeMedidaDTO.java
     const dados = {
         descricao: $("#descricao").val(),
         sigla: $("#sigla").val() || 0
@@ -88,7 +88,7 @@ function salvar() {
     enviarDados(urlFinal, dados, function () {
         exibirMensagem("Unidade de Medida processada com sucesso!");
         limparFormulario();
-        listarProdutos();
+        listarUnidadeMedidas();
     }, metodo);
 }
 
