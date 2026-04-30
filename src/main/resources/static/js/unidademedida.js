@@ -100,6 +100,7 @@ function prepararEdicao(id) {
     $.get(`${URL_UNIDADEMEDIDAS}/${id}`, function (und) {
         $("#id").val(und.id);
         $("#descricao").val(und.descricao);
+        $("#sigla").val(und.sigla) || 0;
 
         // CORREÇÃO CRÍTICA: Faz as labels subirem para não sobrepor o texto
         M.updateTextFields();
