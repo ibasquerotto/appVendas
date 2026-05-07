@@ -7,6 +7,8 @@ $(document).ready(function() {
     const modais = document.querySelectorAll('.modal');
     if (typeof M !== "undefined") {
         M.Modal.init(modais);
+        $('select').formSelect();
+
     }
 });
 

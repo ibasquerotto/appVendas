@@ -24,6 +24,10 @@ public class Produto implements Serializable {
     @Column(length = 5)
     private int estoqueMinimo;
 
+    @ManyToOne
+    @JoinColumn(name = "id_unidade_medida")
+    private UnidadeMedida unidadeMedida;
+
     public Produto() {
     }
 
@@ -73,6 +77,15 @@ public class Produto implements Serializable {
 
     public void setEstoqueMinimo(int estoqueMinimo) {
         this.estoqueMinimo = estoqueMinimo;
+    }
+
+
+    public UnidadeMedida getUnidadeMedida() {
+        return unidadeMedida;
+    }
+
+    public void setUnidadeMedida(UnidadeMedida unidadeMedida) {
+        this.unidadeMedida = unidadeMedida;
     }
 
     @Override

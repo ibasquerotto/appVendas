@@ -1113,3 +1113,18 @@ insert into unidade_medidas (descricao,sigla,id) values (?,?,default) [22001-240
 2026-05-06 21:14:05.133283-03:00 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLDataException: Value too long for column "SIGLA CHARACTER VARYING(2)": "'und' (3)"; SQL statement:
 insert into unidade_medidas (descricao,sigla,id) values (?,?,default) [22001-240]
+2026-05-07 04:57:09.857045-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]ID_UNIDADE_MEDIDA"; expected "INSERT"; SQL statement:
+ID_UNIDADE_MEDIDA [42001-240]
+2026-05-07 04:57:19.517855-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]ID_UNIDADE_MEDIDAID_UNIDADE_MEDIDA"; expected "INSERT"; SQL statement:
+ID_UNIDADE_MEDIDAID_UNIDADE_MEDIDA [42001-240]
+2026-05-07 04:57:34.735214-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ID_UNIDADE_MEDIDA" not found; SQL statement:
+SELECT * FROM ID_UNIDADE_MEDIDA [42102-240]
+2026-05-07 04:57:35.620153-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ID_UNIDADE_MEDIDA" not found; SQL statement:
+SELECT * FROM ID_UNIDADE_MEDIDA [42102-240]
+2026-05-07 04:57:36.114697-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ID_UNIDADE_MEDIDA" not found; SQL statement:
+SELECT * FROM ID_UNIDADE_MEDIDA [42102-240]

@@ -5,8 +5,10 @@
 
 // URL base da API - Ajustada para a porta padrão do Spring Boot
 const URL_PRODUTOS = "http://localhost:8081/appVendas/produtos";
+const URL_UNIDADEMEDIDAS = "http://localhost:8081/appVendas/unidademedidas";
 $(document).ready(function () {
     listarProdutos();
+    getUnidadeMedidas();
 });
 
 /**
@@ -41,6 +43,7 @@ function gerarTabelaProdutos(lista) {
                     <th>Preço Venda</th>
                     <th>Estoque</th>
                     <th>Mínimo</th>
+                    <th>Unidade de Medida</th>
                     <th class="center">Ações</th>
                 </tr>
             </thead>
@@ -53,6 +56,8 @@ function gerarTabelaProdutos(lista) {
                 <td>R$ ${prod.precoVenda.toFixed(2)}</td>
                 <td>${prod.estoque}</td>
                 <td>${prod.estoqueMinimo}</td>
+                <td>${prod.unidadeSigla}</td> 
+            
                 <td class="center">
                     <a class="btn-flat waves-effect" onclick="prepararEdicao(${prod.id})">
                         <i class="material-icons blue-text">edit</i>
@@ -68,19 +73,51 @@ function gerarTabelaProdutos(lista) {
     return html;
 }
 
+
+
+/**
+ * Busca as UMs do servidor e preenche o Select
+ */
+function getUnidadeMedidas() {
+    $.get(URL_UNIDADEMEDIDAS, function (lista) {
+        let select = $('#unidadeMedida');
+        select.empty(); // Limpa as opções atuais
+        select.append('<option value="" disabled selected>Selecione uma opção</option>');
+
+        lista.forEach(und => {
+            // Usamos und.id no value e und.sigla/descricao no texto
+            select.append(`<option value="${und.id}">${und.sigla} - ${und.descricao}</option>`);
+        });
+
+        // Re-inicializa o componente select do Materialize
+        // Sem isso, as novas opções não aparecerão na tela!
+        $('select').formSelect();
+    })
+        .fail(function() {
+            exibirMensagem("Erro ao carregar unidades de medida.");
+        });
+}
+
+
+
+
+
 /**
  * Envia os dados do formulário (Salvar ou Atualizar).
  */
 function salvar() {
     const id = $("#id").val();
+    const unidadeId = parseInt($("#unidadeMedida").val());
 
     // Coleta dados sincronizados com ProdutoDTO.java
     const dados = {
+        id: id ? parseInt(id) : null,
         nome: $("#nome").val(),
         precoCusto: parseFloat($("#precoCusto").val()) || 0,
         precoVenda: parseFloat($("#precoVenda").val()) || 0,
         estoque: parseInt($("#estoque").val()) || 0,
-        estoqueMinimo: parseInt($("#estoqueMinimo").val()) || 0
+        estoqueMinimo: parseInt($("#estoqueMinimo").val()) || 0,
+        unidadeMedidaId: unidadeId
     };
 
     if (!dados.nome) {
@@ -111,9 +148,13 @@ function prepararEdicao(id) {
         $("#precoVenda").val(prod.precoVenda.toFixed(2));
         $("#estoque").val(prod.estoque);
         $("#estoqueMinimo").val(prod.estoqueMinimo);
-
+        // Define o valor no select (assumindo que o JSON traz prod.unidadeMedida.id)
+        if (prod.unidadeMedida) {
+            $("#unidadeMedida").val(prod.unidadeMedida.id);
+        }
         // CORREÇÃO CRÍTICA: Faz as labels subirem para não sobrepor o texto
         M.updateTextFields();
+        $('select').formSelect();
 
         // Scroll suave para o topo
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -178,6 +219,8 @@ function prepararEdicao(id) {
        // 3. CORREÇÃO VISUAL: Força o Materialize a resetar as labels
        // Isso evita que a label fique "suspensa" em um campo vazio
        if (typeof M !== "undefined") {
+           // Força o select a voltar para a opção "Selecione..."
+           $('select').formSelect();
            M.updateTextFields();
        }
    }
