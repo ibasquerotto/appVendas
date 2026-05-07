@@ -1107,3 +1107,9 @@ drop table VENDA [90107-240]
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
 	at java.base/java.lang.Thread.run(Thread.java:833)
+2026-05-06 21:13:54.917798-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "SIGLA CHARACTER VARYING(2)": "'und' (3)"; SQL statement:
+insert into unidade_medidas (descricao,sigla,id) values (?,?,default) [22001-240]
+2026-05-06 21:14:05.133283-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "SIGLA CHARACTER VARYING(2)": "'und' (3)"; SQL statement:
+insert into unidade_medidas (descricao,sigla,id) values (?,?,default) [22001-240]
