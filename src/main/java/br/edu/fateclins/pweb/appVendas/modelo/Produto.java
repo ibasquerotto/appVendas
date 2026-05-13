@@ -1,6 +1,6 @@
 package br.edu.fateclins.pweb.appVendas.modelo;
 
-import jakarta.persistence.*;
+import      jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;

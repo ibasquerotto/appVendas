@@ -50,13 +50,14 @@ function gerarTabelaProdutos(lista) {
             <tbody>`;
 
     lista.forEach(prod => {
+        const descUnidade = prod.unidadeMedida ? prod.unidadeMedida.sigla: "";
         html += `
             <tr>
                 <td>${prod.nome}</td>
                 <td>R$ ${prod.precoVenda.toFixed(2)}</td>
                 <td>${prod.estoque}</td>
                 <td>${prod.estoqueMinimo}</td>
-                <td>${prod.unidadeSigla}</td> 
+                <td>${descUnidade}</td>
             
                 <td class="center">
                     <a class="btn-flat waves-effect" onclick="prepararEdicao(${prod.id})">
@@ -107,7 +108,7 @@ function getUnidadeMedidas() {
  */
 function salvar() {
     const id = $("#id").val();
-    const unidadeId = parseInt($("#unidadeMedida").val());
+    const unidadeId = $("#unidadeMedida").val();
 
     // Coleta dados sincronizados com ProdutoDTO.java
     const dados = {
@@ -117,7 +118,7 @@ function salvar() {
         precoVenda: parseFloat($("#precoVenda").val()) || 0,
         estoque: parseInt($("#estoque").val()) || 0,
         estoqueMinimo: parseInt($("#estoqueMinimo").val()) || 0,
-        unidadeMedidaId: unidadeId
+        unidadeMedida: {id: parseInt(unidadeId)}
     };
 
     if (!dados.nome) {
@@ -149,7 +150,7 @@ function prepararEdicao(id) {
         $("#estoque").val(prod.estoque);
         $("#estoqueMinimo").val(prod.estoqueMinimo);
         // Define o valor no select (assumindo que o JSON traz prod.unidadeMedida.id)
-        if (prod.unidadeMedida) {
+        if (prod.unidadeMedida && prod.unidadeMedida.id) {
             $("#unidadeMedida").val(prod.unidadeMedida.id);
         }
         // CORREÇÃO CRÍTICA: Faz as labels subirem para não sobrepor o texto
@@ -220,6 +221,7 @@ function prepararEdicao(id) {
        // Isso evita que a label fique "suspensa" em um campo vazio
        if (typeof M !== "undefined") {
            // Força o select a voltar para a opção "Selecione..."
+           $("#unidadeMedida").val();
            $('select').formSelect();
            M.updateTextFields();
        }
